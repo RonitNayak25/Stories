@@ -1,0 +1,79 @@
+{% extends 'MyApp/main.html' %}
+{% load static %}
+{% block content %}
+
+<section class="hero-wrap hero-wrap-2" style="background-image: url({% static 'MyApp/images/bg_4.jpg' %});">
+    <div class="overlay"></div>
+    <div class="container">
+        <div class="row no-gutters slider-text align-items-end justify-content-center">
+            <div class="col-md-9 ftco-animate pb-5 text-center">
+                <h1 class="mb-3 bread">Foods</h1>
+                <p class="breadcrumbs"><span class="mr-2"><a href="{% url 'index' %}">Home <i
+                        class="ion-ios-arrow-forward"></i></a></span> <span>Foods <i
+                        class="ion-ios-arrow-forward"></i></span></p>
+            </div>
+        </div>
+    </div>
+</section>
+
+
+<section class="ftco-section">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-9">
+                <div class="row">
+                    {% for post in posts %}
+                        <div class="col-md-4 ftco-animate">
+                            <div class="blog-entry">
+                                <a href="single.html" class="img-2"><img
+                                        src="{{ post.image.url }}" class="img-fluid"
+                                        alt="Colorlib Template"></a>
+                                <div class="text pt-3">
+                                    <p class="meta d-flex"><span class="pr-3">{{ post.category }}</span><span
+                                            class="ml-auto pl-3">{{ post.date_posted|date:"d F, Y" }}</span>
+                                    </p>
+                                    <h3><a href="single.html">{{ post.title }}</a></h3>
+                                    <p class="mb-0"><a href="{% url 'post_detail' post.id %}"
+                                                       class="btn btn-black py-2">Read More<span
+                                            class="icon-arrow_forward ml-4"></span></a></p>
+                                </div>
+                            </div>
+                        </div>
+                    {% endfor %}
+                </div>
+                <div class="row mt-5">
+                    <div class="col text-center">
+                        <div class="block-27">
+                            {% if is_paginated %}
+                                <ul>
+                                    {% if page_obj.has_previous %}
+                                        <li><a href="?page={{ page_obj.previous_page_number }}">&lt;</a></li>
+                                    {% endif %}
+                                    {% for i in paginator.page_range %}
+                                        {% if page_obj.number == i %}
+                                            <li class="active"><a href="?page={{ i }}">{{ i }}</a></li>
+                                        {% elif i > page_obj.number|add:'-3' and i < page_obj.number|add:'3' %}
+                                            <li><a href="?page={{ i }}">{{ i }}</a></li>
+                                        {% endif %}
+                                    {% endfor %}
+                                    {% if page_obj.has_next %}
+                                        <li><a href="?page={{ page_obj.next_page_number }}">&gt;</a></li>
+                                    {% endif %}
+                                </ul>
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-lg-3">
+                <div class="sidebar-wrap">
+                    {% include 'MyApp/about_me.html' %}
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+{% include 'MyApp/newsletter.html' %}
+{% endblock content %}
