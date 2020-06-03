@@ -190,6 +190,12 @@
 
                 </div> <!-- .col-md-8 -->
                 <div class="col-lg-4 sidebar pr-lg-5 ftco-animate">
+                    <div class="sidebar-box">
+                        <form action="#" class="search-form">
+                            {{ filters.form.as_p }}
+                            <input type="submit"/>
+                        </form>
+                    </div>
                     <div class="sidebar-box ftco-animate">
                         <ul class="categories">
                             <h3 class="heading mb-4">Categories</h3>
@@ -220,6 +226,27 @@
                             </div>
                         {% endfor %}
                     </div>
+
+                    {% if filters.qs %}
+                        <div class="sidebar-box ftco-animate">
+                            <h3 class="heading mb-4">Your Search Resuts</h3>
+                            {% for post in filters.qs %}
+                                <div class="block-21 mb-4 d-flex">
+                                    <a class="blog-img mr-4" style="background-image: url({{ post.image.url }});"></a>
+                                    <a href="{% url 'post_detail' post.id %}">
+                                        <div class="text">
+                                            <h3 style="width: 250px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">{{ post.content }}</h3>
+                                            <div class="meta">
+                                                <div><span class="icon-calendar"></span> {{ post.date }}</div>
+                                                <div><span class="icon-person"></span> {{ post.author }}</div>
+                                                <div><span class="icon-chat"></span> 19</div>
+                                            </div>
+                                        </div>
+                                    </a>
+                                </div>
+                            {% endfor %}
+                        </div>
+                    {% endif %}
 
                     <div class="sidebar-box ftco-animate">
                         <h3 class="heading mb-4">Tag Cloud</h3>

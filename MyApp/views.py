@@ -5,6 +5,7 @@ from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.views.generic import CreateView, UpdateView, DeleteView, ListView
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
+from .filters import PostFilter
 
 
 def register(request):
@@ -126,10 +127,12 @@ def single(request, pk):
     recent_posts = Post.objects.all().order_by("-id")[0:3]
     lifestyle_count = Post.objects.filter(category='Lifestyle').count()
     food_count = Post.objects.filter(category='Food').count()
+    filters = PostFilter(request.GET, queryset=Post.objects.all())
     context = {
         'posts': posts,
         'recent_posts': recent_posts,
         'lifestyle_count': lifestyle_count,
-        'food_count': food_count
+        'food_count': food_count,
+        'filters': filters
     }
     return render(request, 'MyApp/single.html', context)
