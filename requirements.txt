@@ -13,7 +13,7 @@ distro==1.4.0
 Django==3.0.7
 django-crispy-forms==1.9.1
 django-filter==2.2.0
-djangorestframework==3.11.0
+djangorestframework==3.11.2
 google-api-core==1.17.0
 google-auth==1.15.0
 googleapis-common-protos==1.51.0
